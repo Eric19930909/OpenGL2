@@ -10,7 +10,7 @@ import android.util.AttributeSet;
  */
 public class MyGLSurfaceView extends GLSurfaceView {
 
-    private MyRenderer mRenderer = new MyRenderer();
+    private SecondRenderer mRenderer;
 
     public MyGLSurfaceView(Context context) {
         super(context);
@@ -23,6 +23,8 @@ public class MyGLSurfaceView extends GLSurfaceView {
     }
 
     private void init() {
+
+        mRenderer = new SecondRenderer(getContext());
 
         setEGLContextClientVersion(2);
         setRenderer(mRenderer);
