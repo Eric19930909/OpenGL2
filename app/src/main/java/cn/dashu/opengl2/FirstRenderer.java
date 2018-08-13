@@ -8,8 +8,6 @@ import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 
 import static android.opengl.GLES20.*;
-import static android.opengl.GLUtils.*;
-import static android.opengl.Matrix.*;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
@@ -91,8 +89,8 @@ public class FirstRenderer implements GLSurfaceView.Renderer {
         // 打开深度检测
 //        glEnable(GL_DEPTH_TEST);
 
-        vertexShaderSource = FileUtil.readTextFileFromResource(mContext, R.raw.simple_vertex_shader);
-        fragmentShaderSource = FileUtil.readTextFileFromResource(mContext, R.raw.simple_fragment_shader);
+        vertexShaderSource = FileUtil.readTextFileFromResource(mContext, R.raw.first_vertex_shader);
+        fragmentShaderSource = FileUtil.readTextFileFromResource(mContext, R.raw.first_fragment_shader);
 
         vertexShader = ShaderUtil.compileVertexShader(vertexShaderSource);
         fragmentShader = ShaderUtil.compileFragmentShader(fragmentShaderSource);

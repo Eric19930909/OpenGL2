@@ -8,8 +8,6 @@ import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 
 import static android.opengl.GLES20.*;
-import static android.opengl.GLUtils.*;
-import static android.opengl.Matrix.*;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
@@ -27,29 +25,25 @@ public class SecondRenderer implements GLSurfaceView.Renderer {
     private FloatBuffer vertexData;
 
     private static final int POSITION_COMPONENT_COUNT = 2;
+    private static final int COLOR_COMPONENT_COUNT = 3;
 
-    float[] tableVertices = {
-            0f, 0f,
-            0f, 14f,
-            9f, 14f,
-            9f, 0f
-    };
+    private static final int STRIDE = (POSITION_COMPONENT_COUNT + COLOR_COMPONENT_COUNT) * BYTES_PER_FLOAT;
 
     private float[] tableVerticesWithTriangles = {
-            // Triangle 1
-            -0.5f, -0.5f,
-            0.5f, 0.5f,
-            -0.5f, 0.5f,
-            // Triangle 2
-            -0.5f, -0.5f,
-            0.5f, -0.5f,
-            0.5f, 0.5f,
+            // Order of coordinates: X, Y, R, G, B
+            // Triangle Fan
+            0f, 0f, 1f, 1f, 1f,
+            -0.5f, -0.5f, 0.7f, 0.7f, 0.7f,
+            0.5f, -0.5f, 0.7f, 0.7f, 0.7f,
+            0.5f, 0.5f, 0.7f, 0.7f, 0.7f,
+            -0.5f, 0.5f, 0.7f, 0.7f, 0.7f,
+            -0.5f, -0.5f, 0.7f, 0.7f, 0.7f,
             // Line 1
-            -0.5f, 0f,
-            0.5f, 0f,
+            -0.5f, 0f, 1f, 0f, 0f,
+            0.5f, 0f, 1f, 0f, 0f,
             // Mallets
-            0f, -0.25f,
-            0f, 0.25f
+            0f, -0.25f, 0f, 0f, 1f,
+            0f, 0.25f, 1f, 0f, 0f
     };
 
     private Context mContext;
@@ -62,8 +56,8 @@ public class SecondRenderer implements GLSurfaceView.Renderer {
 
     private int program;
 
-    private static final String U_COLOR = "u_Color";
-    private int uColorLocation;
+    private static final String A_COLOR = "a_Color";
+    private int aColorLocation;
 
     private static final String A_POSITION = "a_Position";
     private int aPositionLocation;
@@ -91,8 +85,8 @@ public class SecondRenderer implements GLSurfaceView.Renderer {
         // 打开深度检测
 //        glEnable(GL_DEPTH_TEST);
 
-        vertexShaderSource = FileUtil.readTextFileFromResource(mContext, R.raw.simple_vertex_shader);
-        fragmentShaderSource = FileUtil.readTextFileFromResource(mContext, R.raw.simple_fragment_shader);
+        vertexShaderSource = FileUtil.readTextFileFromResource(mContext, R.raw.second_vertex_shader);
+        fragmentShaderSource = FileUtil.readTextFileFromResource(mContext, R.raw.second_fragment_shader);
 
         vertexShader = ShaderUtil.compileVertexShader(vertexShaderSource);
         fragmentShader = ShaderUtil.compileFragmentShader(fragmentShaderSource);
@@ -102,10 +96,20 @@ public class SecondRenderer implements GLSurfaceView.Renderer {
         if (ShaderUtil.validateProgram(program)) {
             glUseProgram(program);
 
-            // 获取uniform位置
-            uColorLocation = glGetUniformLocation(program, U_COLOR);
             // 获取属性位置
+            aColorLocation = glGetAttribLocation(program, A_COLOR);
             aPositionLocation = glGetAttribLocation(program, A_POSITION);
+
+            // 开启
+            glEnableVertexAttribArray(aPositionLocation);
+            // 关联属性与顶点数据的数组
+            glVertexAttribPointer(aPositionLocation, POSITION_COMPONENT_COUNT, GL_FLOAT, false, STRIDE, vertexData);
+
+            vertexData.position(POSITION_COMPONENT_COUNT);
+            // 开启
+            glEnableVertexAttribArray(aColorLocation);
+            // 关联颜色
+            glVertexAttribPointer(aColorLocation, COLOR_COMPONENT_COUNT, GL_FLOAT, false, STRIDE, vertexData);
 
         }
 
@@ -121,24 +125,14 @@ public class SecondRenderer implements GLSurfaceView.Renderer {
 
         glClear(GL_COLOR_BUFFER_BIT);
 
-        // 开启
-        glEnableVertexAttribArray(aPositionLocation);
-        // 关联属性与顶点数据的数组
-        glVertexAttribPointer(aPositionLocation, POSITION_COMPONENT_COUNT, GL_FLOAT, false, 0, vertexData);
-
         // 桌子
-        glUniform4f(uColorLocation, 1.0f, 1.0f, 1.0f, 1.0f);
-        glDrawArrays(GL_TRIANGLES, 0, 6);
+        glDrawArrays(GL_TRIANGLE_FAN, 0, 6);
 
         // 分隔线
-        glUniform4f(uColorLocation, 1f, 0f, 0f, 1f);
         glDrawArrays(GL_LINES, 6, 2);
 
         // 木槌
-        glUniform4f(uColorLocation, 0f, 0f, 1f, 1f);
         glDrawArrays(GL_POINTS, 8, 1);
-
-        glUniform4f(uColorLocation, 1f, 0f, 0f, 1f);
         glDrawArrays(GL_POINTS, 9, 1);
 
     }
