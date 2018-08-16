@@ -49,4 +49,11 @@ public class MatrixUtil {
         Matrix.orthoM(m, mOffset, left, right, bottom, top, near, far);
     }
 
+    /**
+     *
+     * */
+    public static void perspectiveM(float[] m, float yFovInDegrees, float aspect, float near, float far) {
+        Matrix.perspectiveM(m, 0, yFovInDegrees, aspect, near, far);
+    }
+
 }

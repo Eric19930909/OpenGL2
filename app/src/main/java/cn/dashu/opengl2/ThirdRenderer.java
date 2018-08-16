@@ -16,9 +16,8 @@ import javax.microedition.khronos.opengles.GL10;
 /**
  * @author lushujie
  * @date 2018/8/9
- * 1.三角形的卷曲顺序 -> 逆时针排列顶点，可优化性能。可以指出一个三角形属于任何给定物体的前面/后面。
- * 2.着色器：A.顶点着色器（vertex shader）：顶点位置。
- * B.片段着色器（fragment shader）:为组成点、直线或者三角形的每个片段生成最终的颜色。
+ * <p>
+ * 到第五章
  */
 public class ThirdRenderer implements GLSurfaceView.Renderer {
 
