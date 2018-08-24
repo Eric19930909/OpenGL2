@@ -1,4 +1,4 @@
-package cn.dashu.opengl2;
+package cn.dashu.opengl2.util;
 
 import android.opengl.Matrix;
 
@@ -54,6 +54,22 @@ public class MatrixUtil {
      * */
     public static void perspectiveM(float[] m, float yFovInDegrees, float aspect, float near, float far) {
         Matrix.perspectiveM(m, 0, yFovInDegrees, aspect, near, far);
+    }
+
+    /**
+     * 视图矩阵
+     *
+     * @param rm                      目标矩阵
+     * @param rmOffset                偏移值
+     * @param eyeX,eyeY,eyeZ          眼睛所在位置
+     * @param centerX,centerY,centerZ 眼睛正在看的位置（场景中心）
+     * @param upX,upY,upZ             头所指向位置
+     */
+    public static void setLookAtM(float[] rm, int rmOffset,
+                                  float eyeX, float eyeY, float eyeZ,
+                                  float centerX, float centerY, float centerZ,
+                                  float upX, float upY, float upZ) {
+        Matrix.setLookAtM(rm, rmOffset, eyeX, eyeY, eyeZ, centerX, centerY, centerZ, upX, upY, upZ);
     }
 
 }

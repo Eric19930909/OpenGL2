@@ -3,8 +3,6 @@ package cn.dashu.opengl2;
 import android.content.Context;
 import android.opengl.GLSurfaceView;
 
-import com.socks.library.KLog;
-
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
@@ -14,6 +12,9 @@ import static android.opengl.Matrix.*;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
+
+import cn.dashu.opengl2.util.FileUtil;
+import cn.dashu.opengl2.util.ShaderUtil;
 
 /**
  * @author lushujie

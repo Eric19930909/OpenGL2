@@ -12,6 +12,9 @@ import static android.opengl.GLES20.*;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
+import cn.dashu.opengl2.util.FileUtil;
+import cn.dashu.opengl2.util.ShaderUtil;
+
 /**
  * @author lushujie
  * @date 2018/8/9

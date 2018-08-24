@@ -23,7 +23,7 @@ public class MyGLSurfaceView extends GLSurfaceView {
     private void init() {
 
         setEGLContextClientVersion(2);
-        setRenderer(new FifthRenderer(getContext()));
+        setRenderer(new SixthRenderer(getContext()));
 
     }
 

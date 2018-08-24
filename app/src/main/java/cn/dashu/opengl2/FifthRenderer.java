@@ -13,6 +13,7 @@ import cn.dashu.opengl2.objects.Mallet;
 import cn.dashu.opengl2.objects.Table;
 import cn.dashu.opengl2.programs.ColorShaderProgram;
 import cn.dashu.opengl2.programs.TextureShaderProgram;
+import cn.dashu.opengl2.util.TextureUtil;
 
 /**
  * @author lushujie

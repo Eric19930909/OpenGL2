@@ -1,4 +1,4 @@
-package cn.dashu.opengl2;
+package cn.dashu.opengl2.util;
 
 import com.socks.library.KLog;
 
